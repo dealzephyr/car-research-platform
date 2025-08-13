@@ -1,0 +1,63 @@
+/* Auth card */
+.auth-card {
+  max-width: 450px;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(204, 204, 204, 1);
+}
+.auth-title {
+  font-weight: 400;
+  color: #2c2c2c;
+  font-size: 24px;
+}
+.auth-subtitle {
+  color: #6c757d;
+  font-size: 14px;
+}
+.form-control {
+  font-size: 14px !important;
+  padding: 9px 0.75rem;
+  box-shadow: 0px 0px 4px 0px #fff;
+}
+
+/* Bootstrap theming helpers (when Bootstrap is loaded) */
+:root {
+  --bs-primary: var(--brand-primary);
+  --bs-primary-rgb: var(--brand-primary-rgb);
+  --bs-link-color: var(--brand-primary);
+  --bs-body-font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+    Arial, sans-serif;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.btn-primary a {
+  text-decoration: none;
+  color: #ffffff;
+}
+.btn-primary {
+  border-color: var(--brand-primary);
+}
+
+.btn-outline-primary {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+.btn-outline-primary:hover {
+  background-color: rgba(var(--brand-primary-rgb), 0.08);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+/* Small helpers */
+.text-muted-sm {
+  color: #8c8c8c;
+  font-size: 0.9rem;
+}
+.w-420 {
+  max-width: 420px;
+}
