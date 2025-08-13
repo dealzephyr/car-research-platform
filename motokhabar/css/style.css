@@ -235,11 +235,14 @@ body {
   font-weight: 500;
   padding: 10px 42px 10px 14px; /* room for caret */
 }
-.filter-pill:focus {
-  box-shadow: 0 0 0 0.2rem rgba(93, 64, 55, 0.15);
-}
-.filter-pill:hover {
-  background-color: #ffffff;
+/* Keep same background when active/focused */
+.filter-pill:focus,
+.filter-pill:active,
+.filter-pill:hover,
+.filter-pill.show {
+  background-color: var(--neutral-light) !important;
+  color: var(--primary-dark) !important;
+  box-shadow: none !important;
 }
 /* caret on right; flips when open */
 .filter-pill i {
@@ -258,6 +261,9 @@ body {
 
 .finder-bar > .dropdown:first-child .filter-pill {
   border-radius: 12px 0 0 12px !important;
+}
+.finder-bar > .dropdown:nth-child(3) .filter-pill {
+  border-radius: 0 12px 12px 0 !important;
 }
 
 /* Dropdown menu card */
@@ -287,9 +293,14 @@ body {
   box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
 }
+
 .btn-search:hover {
   color: var(--neutral-light);
   background: var(--primary-color);
+}
+
+.btn-search i {
+  color: inherit; /* Takes color from parent */
 }
 
 /* Sub text */
@@ -301,7 +312,8 @@ body {
 /* Quiz button */
 .btn-quiz {
   border-radius: 12px;
-  padding: 10px 22px;
+  height: 37px;
+  margin-top: 20px;
   border: 1px solid rgba(255, 255, 255, 0.85);
   color: #fff;
   background: transparent;
@@ -394,6 +406,16 @@ body {
   border: 1px solid #efefef;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
+/* only show the active track inside a slider */
+/* Only the tabbed slider inside rankings-block should toggle visibility */
+.rankings-block .slider-shell .cards-track[data-cat] {
+  display: none;
+}
+.rankings-block .slider-shell .cards-track.is-active {
+  display: grid;
+}
+
+/* Leave all other sliders alone (single tracks without data-cat stay visible) */
 
 /* Slider shell */
 .slider-shell {
@@ -726,6 +748,7 @@ i {
   display: block;
   background: #fff;
   width: 252px;
+  height: 223px;
   border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
@@ -768,7 +791,7 @@ i {
 .type-count {
   display: inline-block;
   width: 72px;
-  padding: 3px 10px; /* top/bottom, left/right */
+  padding: 5px 10px; /* top/bottom, left/right */
   font-size: 10px;
   font-weight: 400;
   color: var(--primary-color); /* brownish text */
@@ -804,17 +827,31 @@ i {
 }
 
 /* Blog cards */
+.featured-blogs h3 {
+  font-weight: 700;
+  font-size: 24px;
+  height: 36px;
+  line-height: 100%;
+}
+.featured-blogs p {
+  font-weight: 400;
+  font-size: 15px;
+
+  color: #757575;
+}
 .blog-card {
   background: #fff;
+  width: 275px;
+
   border: 1px solid #efefef;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 4px -1px #1018281a;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .blog-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 4px -1px #1018281a;
 }
 
 /* Media */
@@ -827,19 +864,37 @@ i {
 
 /* Body */
 .blog-body {
-  padding: 16px;
+  padding: 20px;
 }
-
+.blog-body h5 {
+  width: 242px;
+  height: 48px;
+  font-size: 16px;
+  line-height: 100%;
+  font-weight: 600;
+  color: #212121;
+  margin-top: 20px;
+}
+.blog-body p {
+  width: 242px;
+  font-weight: 400;
+  font-size: 13px;
+  color: #757575;
+  margin-top: 0px;
+}
 .blog-title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   color: #212121; /* primary-dark */
-  margin: 6px 0 8px;
+  line-height: 100%;
+  margin-top: 7px;
 }
 
 .blog-excerpt {
   color: #757575; /* neutral-dark */
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 7px;
   margin-bottom: 14px;
 }
 
@@ -847,10 +902,13 @@ i {
 .badge-soft {
   display: inline-block;
   padding: 6px 10px;
-  font-size: 12px;
+  letter-spacing: 0%;
+  width: 46px;
+  font-size: 10px;
+  font-weight: 500;
   color: var(--primary-color);
   background: var(--secondary-color);
-  border-radius: 999px;
+  border-radius: 30px;
 }
 
 /* Read more button – outlined, rounded */
@@ -878,6 +936,18 @@ i {
 }
 
 /* Review card */
+.expert-reviews h3 {
+  font-weight: 700;
+  font-size: 24px;
+  height: 36px;
+  line-height: 100%;
+}
+.expert-reviews p {
+  font-weight: 400;
+  font-size: 15px;
+
+  color: #757575;
+}
 .review-card {
   background: #fff;
   border: 1px solid #efefef;
