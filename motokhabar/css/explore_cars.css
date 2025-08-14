@@ -32,11 +32,14 @@
   box-shadow: 0 8px 17.6px -9px rgba(0, 0, 0, 0.25);
   border-bottom: 1px solid #d4d4d4;
   padding: 6px;
-  height: 407px;
+  width: 227px;
 }
 .sidebar-sticky {
   position: sticky;
   top: 90px;
+}
+.body-parts {
+  margin-top: 20px;
 }
 
 /* Accordion rows */
@@ -80,7 +83,6 @@
 /* Small selects row on the right */
 .mini-filter {
   width: 205px;
-  height: 41px;
   padding: 8px 12px;
   border-radius: 4px;
   background: #fff;
@@ -89,8 +91,10 @@
   outline: 0;
   font-size: 14px;
 }
-
-/* Optional hover polish for cards in results grid */
+.custom-gap {
+  gap: 21px !important;
+}
+/*  hover polish for cards in results grid */
 .results-grid .car-card.v2:hover {
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
   outline: 1px solid rgba(93, 64, 55, 0.3);

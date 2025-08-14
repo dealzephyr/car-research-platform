@@ -469,14 +469,15 @@ body {
   right: 8px;
 }
 
-/* --- Car card v2 (new look) --- */
+/* --- Car card v2 --- */
 .car-card.v2 {
   width: 275px;
   background: #ffffff;
   border: 1px solid #efefef;
-  border-radius: 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 20px 24px -4px #1018281a;
   scroll-snap-align: start;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -492,36 +493,45 @@ body {
 }
 .car-card__body {
   padding: 14px 16px 16px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .car-card__title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 100%;
   color: #212121;
   margin: 0 0 4px;
 }
 .car-card__location {
-  font-size: 12px;
+  font-size: 14px;
   color: #757575;
+  font-weight: 400;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 .car-card__location .bi {
   font-size: 14px;
-  color: #757575;
+
+  color: #212121;
 }
 .car-card__divider {
-  height: 1px;
+  height: 0px;
+  border: 1px solid #d4d4d4;
   background: #efefef;
   margin: 8px 0 10px;
 }
 .car-card__row {
   font-size: 13px;
-  color: #212121;
+  color: #757575;
   display: flex;
   align-items: center;
 }
-.car-card__row .bi {
+.car-card__row .bi,
+.car-card__grid .bi {
+  font-size: 14px;
   color: #757575;
 }
 .car-card__grid {
@@ -529,11 +539,9 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 8px 12px;
   font-size: 13px;
-  color: #212121;
-}
-.car-card__grid .bi {
   color: #757575;
 }
+
 .car-card__price {
   font-size: 15px;
   font-weight: 700;
@@ -543,7 +551,7 @@ body {
 .car-card.v2 .btn-primary {
   background-color: var(--primary-color);
   color: var(--text-on-primary);
-  border-radius: 10px;
+  border-radius: 7px;
   border: none;
 }
 .car-card.v2 .btn-primary:hover {
@@ -551,12 +559,22 @@ body {
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
+.btn a {
+  text-decoration: none;
+  color: inherit;
+}
 
+.btn a:hover {
+  text-decoration: none;
+  color: inherit;
+}
 .car-card.v2 .btn-secondary {
   background: #fff;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
-  border-radius: 10px;
+  border-radius: 7px;
+  animation-timing-function: ease-out;
+  animation-duration: 300ms;
 }
 .car-card.v2 .btn-secondary:hover {
   border-color: var(--primary-color);
@@ -1125,16 +1143,15 @@ i {
   background-color: #fefcf9;
 }
 
-.ai-expert-icon {
+.ai-expert-icon i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background-color: #4b2c25; /* chocolaty tone */
-  color: #ffffff;
-  font-size: 1.6rem;
+
+  font-size: 50px;
 }
 
 .ai-expert-sub {
