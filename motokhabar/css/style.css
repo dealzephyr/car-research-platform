@@ -82,12 +82,12 @@ body {
   font-weight: 500;
 }
 .header-actions .nav-link:hover,
-.header-actions ion-icon {
+.header-actions ion-icon:hover {
   color: var(--primary-color);
 }
 .header-actions i {
   font-size: 1.1rem;
-  color: var(--primary-dark);
+  color: inherit;
 }
 
 /* Small yellow dot next to "Hello, Login" */
@@ -152,6 +152,7 @@ body {
 /* keep it tight to the next section */
 .hero-landing {
   margin-top: 0;
+  width: 100%;
   margin-left: 75px;
   margin-bottom: 0px;
 }
@@ -373,7 +374,7 @@ body {
 }
 
 /* top 10 car ranking section */
-/* Title per Figma: Poppins 24, bold, #212121 */
+/* Title  */
 .rankings-title {
   font-size: 24px;
   font-weight: 700;
@@ -383,7 +384,10 @@ body {
 
 /* Sub text */
 .rankings-sub {
-  font-size: 14px;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 100%;
   color: #757575;
 }
 
@@ -496,6 +500,10 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+.car-card__body {
+  position: relative;
+  z-index: 2;
+}
 .car-card__title {
   font-size: 17px;
   font-weight: 600;
@@ -521,10 +529,11 @@ body {
   height: 0px;
   border: 1px solid #d4d4d4;
   background: #efefef;
-  margin: 8px 0 10px;
+  margin: 8px 0 15px;
 }
 .car-card__row {
   font-size: 13px;
+  height: 21px;
   color: #757575;
   display: flex;
   align-items: center;
@@ -536,6 +545,7 @@ body {
 }
 .car-card__grid {
   display: grid;
+  height: 21px;
   grid-template-columns: 1fr 1fr;
   gap: 8px 12px;
   font-size: 13px;
@@ -544,8 +554,10 @@ body {
 
 .car-card__price {
   font-size: 15px;
-  font-weight: 700;
-  color: var(--primary-dark);
+  font-weight: 600;
+  color: #212121;
+  line-height: 100%;
+  height: 22px;
   margin: 6px 0 10px;
 }
 .car-card.v2 .btn-primary {
@@ -912,8 +924,8 @@ i {
   color: #757575; /* neutral-dark */
   font-size: 15px;
   font-weight: 400;
-  margin-top: 7px;
-  margin-bottom: 14px;
+
+  margin-bottom: 10px;
 }
 
 /* Soft badge (category) */
@@ -983,7 +995,9 @@ i {
 .review-media img {
   display: block;
   width: 100%;
-  height: 210px; /* tweak for your crop */
+  height: 161px; /* tweak for your crop */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   object-fit: cover;
 }
 
@@ -992,24 +1006,40 @@ i {
   padding: 18px 20px 20px;
 }
 .review-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   color: #212121;
+  margin-top: 10px;
 }
 
 .review-excerpt {
   color: #757575;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: 400;
 }
 
 /* Rating stars */
 .rating .bi-star-fill,
 .rating .bi-star-half {
-  color: #ffc107;
+  color: #e2b93c;
 }
 .rating small {
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 14px;
+}
+.review-body .text-muted {
+  font-size: 13px;
+  color: #757575;
+  margin-top: 10px;
+}
+.review-body .key {
+  font-size: 14px;
+  font-weight: 500;
+  color: #212121;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* Chips */
@@ -1018,9 +1048,10 @@ i {
   padding: 6px 10px;
   font-size: 12px;
   color: var(--primary-color);
-  background: var(--secondary-color);
-  border-radius: 999px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  background: #e2c2bb;
+  border-radius: 28px;
+  box-shadow: 0px 4px 19.4px -6px #00000040;
+  margin-bottom: 10px;
 }
 
 /* Reuse your outlined chocolaty button */
@@ -1295,10 +1326,15 @@ i {
 .footer-bottom-links a {
   color: #ffffff;
   text-decoration: none;
+  transition: transform 0.3s ease-out;
+  display: inline-block;
 }
 .footer-links a:hover,
 .footer-bottom-links a:hover {
   color: #ffffff; /* soft gold on hover */
+  transform: translateY(-2px);
+  animation-timing-function: ease-out;
+  animation-duration: 300ms;
 }
 
 /* Icons */

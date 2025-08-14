@@ -1,3 +1,20 @@
+/* ---- Palette (yours) ---- */
+:root {
+  --primary-color: #5d4037;
+  --primary-light: #4e342e;
+  --primary-dark: #212121;
+  --secondary-color: #e2c2bb;
+  --text-on-primary: #ffffff;
+  --neutral-light: #ffffff;
+  --neutral-mid: #d4d4d4;
+  --neutral-dark: #757575;
+
+  /* Bootstrap color hooks (quick theme) */
+  --bs-primary: #5d4037;
+  --bs-secondary: #e2c2bb;
+  --bs-body-font-family: "Poppins", sans-serif;
+}
+
 /* breadcump */
 .toppart {
   margin-left: 138px;
@@ -83,6 +100,7 @@
 /* Small selects row on the right */
 .mini-filter {
   width: 205px;
+
   padding: 8px 12px;
   border-radius: 4px;
   background: #fff;
@@ -92,7 +110,30 @@
   font-size: 14px;
 }
 .custom-gap {
-  gap: 21px !important;
+  gap: 16px !important;
+}
+.btn-outline-secondary,
+.load {
+  margin-left: 40px;
+
+  border: 1px solid var(--primary-color);
+  border-radius: 7px;
+  height: 41px;
+  color: var(--primary-color);
+  box-shadow: 0px 24px 48px -12px #10182840;
+  background-color: var(--neutral-light);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.btn-outline-secondary:hover,
+.load:hover {
+  box-shadow: 0px 24px 48px -12px #10182840;
+  color: var(--neutral-light);
+  background-color: var(--primary-color);
+}
+.right-parts {
+  padding-left: 0px !important;
 }
 /*  hover polish for cards in results grid */
 .results-grid .car-card.v2:hover {
