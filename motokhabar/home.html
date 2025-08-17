@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Motokhabar - Car Research Platform</title>
 
     <!-- Bootstrap CSS -->
@@ -33,8 +34,14 @@
 
     <!-- Custom CSS (with Bootstrap overrides) -->
     <link rel="stylesheet" href="css/style.css" />
+    
+      
   </head>
+  
   <body>
+   
+      
+    
     <header class="site-header sticky-top">
       <!-- TOP NAV -->
       <nav class="navbar navbar-expand-lg navbar-light header-top shadow-sm">
@@ -47,20 +54,6 @@
               class="site-logo"
             />
           </a>
-
-          <!-- Mobile toggler -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#topNav"
-            aria-controls="topNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
           <!-- Search + right items -->
           <div class="collapse navbar-collapse" id="topNav">
             <!-- Search -->
@@ -83,18 +76,28 @@
 
             <!-- Right items -->
             <ul class="navbar-nav ms-auto align-items-center header-actions">
-              <li class="nav-item d-flex align-items-center me-3">
-                <!-- <i class="bi bi-shuffle me-2"></i> -->
-                <ion-icon
+               <li class="nav-item">
+                <a
+                  class="nav-link p-0 d-flex align-items-center"
+                  href="#"
+                  style="white-space: nowrap"
+                >
+                  <ion-icon
                   name="git-compare-outline"
                   style="width: 20px; height: 20px; padding-right: 3px"
                 ></ion-icon>
-
-                <a class="nav-link p-0" href="#">Compare</a>
+                  Compare
+                </a>
               </li>
-              <li class="nav-item d-flex align-items-center me-3">
-                <i class="bi bi-bell me-2"></i>
-                <a class="nav-link p-0" href="#">Notification</a>
+              <li class="nav-item">
+                <a
+                  class="nav-link p-0 d-flex align-items-center"
+                  href="#"
+                  style="white-space: nowrap"
+                >
+                  <i class="bi bi-bell me-2"></i>
+                  Notification
+                </a>
               </li>
               <li class="nav-item">
                 <a
@@ -122,18 +125,6 @@
         class="navbar navbar-expand-lg navbar-light header-bottom border-top"
       >
         <div class="container header-container">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#bottomNav"
-            aria-controls="bottomNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
           <div
             class="collapse navbar-collapse justify-content-center"
             id="bottomNav"
@@ -158,13 +149,37 @@
       </nav>
     </header>
 
+<!-- For mobile view  -->
+    <nav class="mobile-tabbar" role="tablist" aria-label="Primary">
+      <a href="/" class="tab-item" role="tab" aria-selected="false">
+        <i class="bi bi-house-fill"></i>
+        
+      </a>
+      <a href="/search" class="tab-item" role="tab" aria-selected="false">
+        <i class="bi bi-search"></i>
+       
+      </a>
+      <a href="/cars" class="tab-item" role="tab" aria-selected="false">
+        <i class="bi bi-car-front"></i>
+        
+      </a>
+      <a href="/bookmarks" class="tab-item" role="tab" aria-selected="false">
+        <i class="bi bi-newspaper"></i>
+        
+      </a>
+      <a href="/profile" class="tab-item" role="tab" aria-selected="false">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+      </a>
+    </nav>
+
     <!-- MAIN CONTENT -->
     <main class="my-5">
       <!-- HERO -->
        
-<section class="hero-landing container my-0">
+<section class="hero-landing container my-0 ">
   <div class="hero-bg">
-    <img src="assets/images/backfroung-image-roadview.jpg" alt="Mountain road" class="hero-img" />
+    <img src="assets/images/background-image-roadview.jpg" alt="Mountain road" class="hero-img" />
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -172,11 +187,11 @@
       <h1 class="hero-title text-center">Find Your Perfect Car</h1>
 
       <!-- Finder row -->
-      <div class="d-flex justify-content-center">
+      <div class=" d-flex justify-content-center align-items-center">
         <div class="finder-wrap">
           <div class="finder-bar">
             <!-- Brand -->
-            <div class="dropdown flex-fill">
+            <div class="dropdown">
               <button class="btn filter-pill w-100 text-start" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="label">Select Brand</span>
                 <i class="bi bi-chevron-down caret"></i>
@@ -189,7 +204,7 @@
             </div>
 
             <!-- Model -->
-            <div class="dropdown flex-fill">
+            <div class="dropdown">
               <button class="btn filter-pill w-100 text-start" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="label">Select Model</span>
                 <i class="bi bi-chevron-down caret"></i>
@@ -202,7 +217,7 @@
             </div>
 
             <!-- Variant -->
-            <div class="dropdown flex-fill">
+            <div class="dropdown">
               <button class="btn filter-pill w-100 text-start" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="label">Select Variant</span>
                 <i class="bi bi-chevron-down caret"></i>
@@ -440,11 +455,11 @@
                   <div class="car-card__media">
                     <img
                       src="assets/images/marutisuzuki.png"
-                      alt="Maruti Suzuki Swift"
+                      alt="SUV Maruti Suzuki Swift"
                     />
                   </div>
                   <div class="car-card__body">
-                    <h6 class="car-card__title">Maruti Suzuki Swift</h6>
+                    <h6 class="car-card__title">SUVs Maruti Suzuki Swift</h6>
 
                     <div class="car-card__location"><span>
                       <i class="bi bi-geo-alt-fill me-1"></i>
@@ -577,11 +592,11 @@
                   <div class="car-card__media">
                     <img
                       src="assets/images/marutisuzuki.png"
-                      alt="Maruti Suzuki Swift"
+                      alt="Sedans Maruti Suzuki Swift"
                     />
                   </div>
                   <div class="car-card__body">
-                    <h6 class="car-card__title">Maruti Suzuki Swift</h6>
+                    <h6 class="car-card__title">Sedans Maruti Suzuki Swift</h6>
 
                     <div class="car-card__location"><span>
                       <i class="bi bi-geo-alt-fill me-1"></i>
@@ -714,11 +729,11 @@
                   <div class="car-card__media">
                     <img
                       src="assets/images/marutisuzuki.png"
-                      alt="Maruti Suzuki Swift"
+                      alt="EVs Maruti Suzuki Swift"
                     />
                   </div>
                   <div class="car-card__body">
-                    <h6 class="car-card__title">Maruti Suzuki Swift</h6>
+                    <h6 class="car-card__title">EVs Maruti Suzuki Swift</h6>
 
                     <div class="car-card__location"><span>
                       <i class="bi bi-geo-alt-fill me-1"></i>
@@ -854,6 +869,8 @@
                 <i class="bi bi-rocket-takeoff me-2"></i>
                 <div>
                   <h5 class="m-0">New Car Launches</h5>
+                                <button type="button" class="launches-close-btn d-none" aria-label="Close list">×</button>
+
                   <small class="text-muted"
                     >Stay updated with the latest upcoming car models.</small
                   >
@@ -909,10 +926,39 @@
                   </div>
                 </a>
               </div>
+              <button type="button" class="launches-toggle-btn" aria-expanded="false">View More</button>
+
             </div>
           </aside>
         </div>
       </section>
+     <!-- JS: swap "View More" ↔ "Close" on click -->
+<script>
+document.addEventListener('click', (e) => {
+  const viewMore = e.target.closest('.launches-toggle-btn');   // "View More" button
+  const closeBtn = e.target.closest('.launches-close-btn');    // "Close ×" button
+  if (!viewMore && !closeBtn) return;
+
+  const card = (viewMore || closeBtn).closest('.launches-card');
+  if (!card) return;
+
+  const vm = card.querySelector('.launches-toggle-btn');
+  const cb = card.querySelector('.launches-close-btn');
+
+  if (viewMore) {
+    card.classList.add('is-open');
+    vm?.classList.add('d-none');        // hide "View More"
+    cb?.classList.remove('d-none');     // show "Close"
+    vm?.setAttribute('aria-expanded', 'true');
+  } else {
+    card.classList.remove('is-open');
+    vm?.classList.remove('d-none');     // show "View More"
+    cb?.classList.add('d-none');        // hide "Close"
+    vm?.setAttribute('aria-expanded', 'false');
+  }
+});
+</script>
+
 
       <!-- Popular cars in 2025  -->
       <section class="container popular-cars my-5">
@@ -1163,8 +1209,8 @@
                   ><ion-icon
                   name="checkbox"
                  
-                ></ion-icon></i
-                ></span>
+                ></ion-icon>
+                </span>
                 <span>Comprehensive Reviews</span>
               </div>
               <div class="col-sm-6 d-flex align-items-center gap-3">
@@ -1299,6 +1345,10 @@
 
           <!-- Repeat for all categories -->
         </div>
+        <div class="load-more-wrap">
+  <button type="button" class="load-more-btn">Load More</button>
+</div>
+
       </section>
 
       <!-- Popular EVs -->
@@ -1759,7 +1809,7 @@
           <p class="review-excerpt">The new Creta impresses with its bold design and feature-rich interior. Perfect for Nepali roads.</p>
           <div class="text-muted small mb-2">3 min read</div>
           <div class="fw-semibold mb-2">Key Highlights:</div>
-          <div class="d-flex flex-wrap gap-2 mb-3">
+          <div class="d-flex flex-wrap gap-2 mb-3 key">
             <span class="chip">Spacious Interior</span>
             <span class="chip">Feature-rich</span>
             <span class="chip">Refined Ride</span>
@@ -1772,8 +1822,13 @@
 </section>
 <!-- Popular Brands -->
 <section class="brands-section">
-  <h2 class="section-title">Popular Brands</h2>
-  <p class="section-subtitle">Browse by car manufacturer</p>
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+    <div>
+      <h2 class="section-title mb-1">Popular Brands</h2>
+      <p class="section-subtitle mb-0">Browse by car manufacturer</p>
+    </div>
+    <a href="#" class="btn btn-secondary btn-sm view-btn">View All</a>
+  </div>
 
   <div class="brands-grid">
     <!-- Single brand card -->

@@ -6,17 +6,42 @@
   --text-on-primary: #fff;
 }
 :root {
-  --mi-card-bg: #fff;
-  --mi-border: #efefef;
-  --mi-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
-  --mi-muted: #6b6b6b;
-  --mi-ink: #212121;
-  --mi-accent: #5d4037; /* chocolaty primary you’ve been using */
-  --mi-danger: #c0392b; /* for red highlight */
   --mi-icon: #7b61ff; /* purple calendar */
 }
 
 /* wrapper with dual gradient & big radius like the mock */
+
+.car-hero .row {
+  --bs-gutter-x: 0;
+}
+
+@media (min-width: 992px) {
+  .car-hero .row {
+    display: grid;
+    grid-template-columns: 1fr 557px; /* left grows, right is 557px */
+    align-items: center;
+  }
+}
+
+.hero-right {
+  padding-right: 0 !important;
+}
+#heroCarCarousel {
+  width: 557px;
+  margin-left: auto;
+} /* sticks to the right edge */
+
+/* (nice-to-have) keep the image clean inside the carousel */
+.hero-right .carousel-inner {
+  border-radius: 16px;
+  overflow: hidden;
+}
+.hero-right .car-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .car-hero {
   background: linear-gradient(
       90deg,

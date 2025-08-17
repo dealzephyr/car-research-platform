@@ -1,3 +1,12 @@
+/* Let widths calculate predictably */
+*,*::before,*::after{ box-sizing:border-box; }
+
+/* Stop accidental sideways scroll */
+html,body{ width:100%; max-width:100%; overflow-x:hidden; }
+
+/* Make media shrink nicely */
+img,video,canvas,svg{ max-width:100%; height:auto; display:block; }
+
 /* ---- Palette (yours) ---- */
 :root {
   --primary-color: #5d4037;
@@ -22,6 +31,9 @@ body {
   background: #fff;
   color: var(--primary-dark);
   font-size: 14px;
+  margin-top: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Keep container at 1440 design width */
@@ -48,7 +60,7 @@ body {
 } /* vertically center logo look */
 
 .header-search .input-group {
-  width: 429px;
+  
   height: 34px;
   border-radius: 28px;
   background: #fff;
@@ -146,16 +158,185 @@ body {
   display: block;
 }
 
-/* Main -dropdown */
+.header-container { max-width: 1440px; width: 100%; }
+header, .navbar, .header-container { max-width: 100%; }
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+
+
+/* Hide the desktop bottom nav on mobile/tablet; show on desktop */
+@media (max-width: 991.98px) { .header-bottom { display: none !important; } }
+@media (min-width: 992px)    { .header-bottom { display: block !important; } }
+
+/* Mobile fixed tab bar (only visible ≤991.98) */
+.mobile-tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  z-index: 1045; height: 64px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: #fff; border-top: 1px solid #eaeaea;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.06);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  align-items: center; gap: 2px;
+}
+@media (min-width: 992px) { .mobile-tabbar { display: none !important; } }
+
+/* Tab items */
+.mobile-tabbar .tab-item{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; text-decoration:none; font-size:11.5px; line-height:1;
+  color: var(--primary-dark); padding:6px 4px 8px;
+}
+.mobile-tabbar .tab-item i{ font-size:20px; }
+.mobile-tabbar .tab-item.active,
+.mobile-tabbar .tab-item[aria-selected="true"]{ color: var(--primary-color); }
+.mobile-tabbar .tab-item:active i{ transform: scale(0.94); }
+
+/* Prevent content being hidden behind the tabbar (≤991.98) */
+@media (max-width: 991.98px){
+  body{ padding-bottom: calc(64px + env(safe-area-inset-bottom, 0)); }
+}
+
+/*
+   TOP NAV — MOBILE & TABLET (≤991.98)
+   */
+@media (max-width: 991.98px){
+  /* Tight side padding; keep one row */
+  .header-top.navbar{ padding: 0 8px; flex-wrap: nowrap !important; }
+
+  .header-top .header-container{
+    display:flex !important; align-items:center !important;
+    flex-wrap: nowrap !important; width:100%;
+  }
+
+  /* Brand left, everything else next to it (small fixed gap) */
+  .header-top .navbar-brand{
+    margin-right: 6px !important;   /* <— key: reduces logo→content gap */
+    flex: 0 0 auto !important;
+  }
+
+  /* Force collapse content inline (no dropdown menu UI), and keep near logo */
+  .header-top #topNav.collapse,
+  .header-top #topNav.collapse:not(.show){
+    display:flex !important; flex-direction:row !important;
+    align-items:center !important; justify-content:flex-start !important;
+    flex: 0 0 auto !important; width:auto !important; height:auto !important;
+    visibility:visible !important;
+  }
+
+  /* Hide the search on ≤991.98 to avoid wrapping */
+  .header-top #topNav > .header-search{ display:none !important; }
+
+  /* Right actions: tight spacing */
+  .header-top .header-actions{
+    display:flex !important; flex-direction:row !important; align-items:center !important;
+    flex-wrap: nowrap !important; gap: 6px !important; margin-left: 6px !important;
+  }
+
+  /* Hide Notification (2nd item) on mobile/tablet */
+  .header-top .header-actions > li:nth-child(2){ display:none !important; }
+
+  /* Reorder: Hello/Login (3rd) first, Compare (1st) second, Flag (4th) third */
+  .header-top .header-actions > li:nth-child(3){ order:1; } /* Hello, Login */
+  .header-top .header-actions > li:nth-child(1){ order:2; } /* Compare */
+  .header-top .header-actions > li:nth-child(4){ order:3; } /* Flag */
+
+  /* Hello/Login compact */
+  .header-top .header-actions > li:nth-child(3) .nav-link{
+    display:inline-flex !important; align-items:center !important;
+    gap:4px !important; font-size: .9rem !important; line-height:1.2 !important;
+    padding:0 !important; white-space:nowrap !important;
+  }
+  .header-top .header-actions > li:nth-child(3) .bi-person{ margin-right:0 !important; font-size:1rem; line-height:1; }
+  .header-top .header-actions > li:nth-child(3) .badge-dot{ margin-left:0 !important; }
+
+  /* Compare icon only */
+  .header-top .header-actions > li:nth-child(1) .nav-link{ font-size:0 !important; padding:0 !important; }
+  .header-top .header-actions > li:nth-child(1) ion-icon{ width:20px; height:20px; padding:0; }
+
+  /* Flag compact */
+  .header-top .flag-nepal{
+    width:22px; height:22px; display:inline-flex !important; align-items:center; justify-content:center;
+    margin:0 !important;
+  }
+  .header-top .flag-nepal img{ max-width:80%; max-height:80%; }
+
+  /* Logo size on phones/tablets */
+  .site-logo{ width: 130px !important; height:auto !important; margin:0 !important; object-fit:contain; }
+}
+
+/* Small phones micro-tweaks (optional) */
+@media (max-width: 360px){
+  .header-top.navbar{ padding: 0 6px; }
+  .site-logo{ width: 120px !important; }
+  .header-top .header-actions{ gap: 4px !important; }
+}
+
+/*
+   DESKTOP (≥992px)
+ */
+@media (min-width: 992px){
+  /* Hide mobile tabbar; show desktop bottom nav */
+  .mobile-tabbar{ display:none !important; }
+  .header-bottom{ display:block !important; }
+
+  /* Comfortable side padding */
+  .header-top.navbar{ padding: 0 24px; }
+
+  /* Restore Bootstrap's inline collapse */
+  .header-top #topNav.collapse{
+    display:flex !important; flex-direction:row !important; align-items:center !important;
+    justify-content:flex-end !important; width:auto !important; height:auto !important;
+    visibility: visible !important;
+  }
+
+  /* Show search inline on desktop */
+  .header-top .header-search{
+    display:block !important; width: min(520px, 42vw);
+    margin: 0 16px !important;
+  }
+
+  /* Actions spacing back to normal; all items visible */
+  .header-top .header-actions{
+    gap: 22px !important; flex-wrap: nowrap !important; margin-left: 0 !important;
+  }
+  .header-top .header-actions > li:nth-child(2){ display:list-item !important; } /* Notification back */
+  .header-top .header-actions > li:nth-child(1) .nav-link{ font-size: 1rem !important; } /* show "Compare" text */
+
+  /* Desktop logo size */
+  .site-logo{ width: 193px !important; height:auto !important; }
+}
+
+/* Wider desktops: mild polish */
+@media (min-width: 1280px){
+  .header-top.navbar{ padding: 0 28px; }
+  .header-top .header-search{ width: 560px; }
+  .header-top .header-actions{ gap: 24px !important; }
+}
+@media (min-width: 1440px){
+  .header-top.navbar{ padding: 0 36px; }
+  .header-top .header-actions{ gap: 28px !important; }
+}
+@media (min-width: 1920px){
+  .header-top.navbar{ padding: 0 48px; }
+  .header-top .header-actions{ gap: 32px !important; }
+}
+
+
 /* Hero section  */
 
 /* keep it tight to the next section */
 .hero-landing {
   margin-top: 0;
   width: 100%;
-  margin-left: 75px;
-  margin-bottom: 0px;
+
 }
+section.hero-landing.container {
+  margin-left: 75px;
+  margin-right: 75px;
+ 
+  width: auto;                 /* let it size naturally */
+  max-width:100%;             /* avoid Bootstrap max-width fighting you */
+}
+
 
 /* Background block */
 .hero-bg {
@@ -221,19 +402,20 @@ body {
   padding: 10px;
 }
 
+
 /* Base: all pills/buttons rectangular and share borders */
 
 /* Pills (dropdown buttons) */
 .filter-pill {
   position: relative;
-  height: 46px;
+  height: 47px;
   width: 232px;
-  background: #fff;
-  border: 1px #efefef;
+  background: #ffffff;
+  border: 1px solid #d4d4d4;
   border-radius: 0px !important;
 
-  color: var(--primary-dark);
-  font-weight: 500;
+  color:#757575;
+  font-weight: 400;
   padding: 10px 42px 10px 14px; /* room for caret */
 }
 /* Keep same background when active/focused */
@@ -241,23 +423,21 @@ body {
 .filter-pill:active,
 .filter-pill:hover,
 .filter-pill.show {
-  background-color: var(--neutral-light) !important;
-  color: var(--primary-dark) !important;
+  background-color:#ffffff !important;
+  color:#757575 !important;
   box-shadow: none !important;
 }
 /* caret on right; flips when open */
 .filter-pill i {
   position: absolute;
-  right: 12px;
+  right: 2px;
   top: 50%;
   transform: translateY(-50%);
-  transition: transform 0.18s ease;
+  transition: transform 0.2s ease;
+  
+  pointer-events: none;
   font-size: 16px;
   color: #757575;
-}
-
-.dropdown.show .filter-pill i {
-  transform: translateY(-50%) rotate(180deg);
 }
 
 .finder-bar > .dropdown:first-child .filter-pill {
@@ -270,27 +450,39 @@ body {
 /* Dropdown menu card */
 .dropdown-menu {
   border: 0;
-  border-radius: 12px;
   padding: 0.35rem;
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
 }
-.dropdown-item {
-  border-radius: 8px;
+.dropdown-item{
+  color: #757575;
 }
 .dropdown-item:hover {
   background: #f3f5f7;
-  color: var(--primary-color);
+ color: #757575;
+}
+
+/* Open state: keep translateY AND add rotate */
+.filter-pill[aria-expanded="true"] .caret {
+  transform: translateY(-50%) rotate(-180deg);
+}
+
+
+.finder-wrap {
+  display: flex;
+  flex-direction: column;          /* stack search + dropdown vertically */
+                     /* space between search and dropdown */
+  align-items: center;             /* keep them centered */
 }
 
 /* Search pill */
 .btn-search {
-  margin-left: 3px;
+  margin-left: 11px;
   height: 46px;
   border-radius: 7px;
   padding: 0 16px;
   background: #fff;
   border: 1px solid #efefef;
-  color: var(--primary-dark);
+  color: var(--primary-light);
   box-shadow: 0 8px 18px -10px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
 }
@@ -325,19 +517,69 @@ body {
   background: #fff;
   border-color: #fff;
 }
+/* Main section class */
+/* Mobile-only hero simplification */
+@media (max-width: 992px)
+{
+  /* Hero section very close to navbar */
+  .hero-landing {
+    margin-top: 2px !important;   /* minimal gap from navbar */
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+  }
+ 
 
-/* Responsive */
-@media (max-width: 991.98px) {
-  .finder-wrap {
-    max-width: 100%;
+  /* Keep rounded corners */
+  .hero-bg {
+    min-height: 159px !important;
+    height: 159px !important;
+    border-radius: 12px !important; /* rounded edges */
+    overflow: hidden !important;
+    position: relative;
   }
-  .finder-bar {
-    flex-wrap: wrap;
-  }
-  .btn-search {
+
+  /* Image fills area */
+  .hero-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px !important; /* match bg */
+  }
+
+  /* Hide all except hero title */
+  .hero-overlay,
+  .finder-wrap,
+  .hero-desc,
+  .btn-quiz,
+  .hero-content h5 {
+    display: none !important;
+  }
+
+  /* Keep title near top */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding-top: 30px !important; /* lower than before */
+  }
+
+  .hero-title {
+    margin: 0 !important;
+    font-size: 1.2rem !important;
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   }
 }
+
+/* Tablet & down (≤ 991.98px) */
+
+
 
 /* Ad slider */
 .ad-slider-sec {
@@ -372,7 +614,96 @@ body {
   border-radius: 12px;
   flex-shrink: 0;
 }
+/* 
+   AD SLIDER — RESPONSIVE
+  */
 
+   .ad-slider-sec {
+    margin-left: 75px; /* keep this everywhere */
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .ad-slider {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* smooth swipe on iOS */
+    scrollbar-width: none; /* Firefox */
+  }
+  .ad-slider::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge */
+  }
+  
+  .ad-slider img {
+    height: 161px; /* default desktop size */
+    border-radius: 12px;
+    flex: 0 0 auto;
+    display: block;
+    object-fit: cover;
+  }
+  
+  /* Laptops ≤ 1200px */
+  @media (max-width: 1199.98px) {
+    .ad-slider img {
+      height: 150px;
+    }
+  }
+  
+  /* Tablets (incl. iPad) ≤ 1024px */
+  @media (max-width: 1024px) {
+    .ad-slider img {
+      height: 140px;
+    }
+  }
+  @media (max-width: 1024px) {
+    .ad-slider-sec  {
+      margin-left: 17px;
+    }
+  }
+  
+  /* Small tablets / large phones ≤ 768px */
+  @media (max-width: 767.98px) {
+    .ad-slider {
+      gap: 8px;
+      padding: 8px 0;
+    }
+    .ad-slider img {
+      height: 125px;
+      border-radius: 10px;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .ad-slider-sec  {
+      margin-left: 17px;
+    }
+  }
+  
+   /* Phones ≤ 576px */
+  @media (max-width: 575.98px) {
+    .ad-slider-sec  {
+      margin-left: 17px;
+    }
+  }
+  
+ 
+  @media (max-width: 575.98px) {
+    .ad-slider img {
+      height: 63px;
+    }
+  }
+  
+  /* Very small phones ≤ 360px */
+  @media (max-width: 359.98px) {
+    .ad-slider img {
+      height: 63px;
+      border-radius: 12px;
+     
+    }
+  }
+  
 /* top 10 car ranking section */
 /* Title  */
 .rankings-title {
@@ -391,7 +722,7 @@ body {
   color: #757575;
 }
 
-/* Tabs per Figma menu: 15px regular */
+/* Tabs */
 .rankings-tabs .nav-link {
   font-size: 15px;
   font-weight: 400;
@@ -679,14 +1010,126 @@ body {
   font-size: 12px;
   color: #757575;
 }
+.launches-toggle-btn {
+  /* layout & centering */
+  display: inline-flex;              /* keeps content centered inside */
+  align-items: center;
+  justify-content: center;
+  align-self: center;                /* centers if parent is flex */
+  margin: 12px auto 0;               /* centers if parent is block */
+  flex: 0 0 auto;                    /* don't stretch in flex rows */
 
-/* Optional: make it full width on small screens */
-@media (max-width: 991.98px) {
-  .launches-card {
-    width: 100%;
-    height: 420px;
+  /* fixed sizing (responsive) */
+  width: 180px;                      /* fixed width */
+  max-width: 80vw;                   /* safety on tiny phones */
+
+  /* styling */
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
+  background: #fff;
+  color: var(--primary-color);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+/* Hover/focus polish */
+.launches-toggle-btn:hover,
+.launches-toggle-btn:focus {
+  background: var(--primary-color);
+  color: #fff;
+}
+.launches-close-btn{
+  font-size: 24px;
+ padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
+  background: #fff;
+  color: var(--primary-color);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;}
+
+
+/* If something forces full-width (e.g. .w-100), override it */
+.launches-toggle-btn.w-100 { width: 180px !important; }
+@media (min-width: 991.98px){
+  .launches-close-btn{display: none;}
+  .launches-toggle-btn{display: none !important; } /* hide toggle on desktop */
+}
+/* --- Mobile: put Launches above Rankings, center it, show 3 items + toggle --- */
+@media (max-width: 991.98px){
+  /* Reorder columns */
+  .rankings-block .row.g-3{ display:flex; flex-direction:column; gap:16px; }
+  .rankings-block .col-lg-3{ order:1; display:flex; justify-content:center; } /* Launches first */
+  .rankings-block .col-lg-9{ order:2; }                                       /* Rankings second */
+
+  /* Center & size card; remove fixed height & scroll on mobile */
+  .launches-card{
+    width:100%;
+    max-width:420px;
+    height:auto;
+    margin:0 auto;
+    padding-bottom: 8px;
+  }
+  .launches-card__list{
+    max-height:none;
+    overflow:visible;
+    padding-right:0;
+  }
+/* Push Close to the far right of the row */
+.launches-close-btn{ margin-left:400px; }
+  /* Show only 3 items by default */
+  .launches-card__list .launches-item:nth-child(n+4){ display:none; }
+
+  /* When open, show all */
+  .launches-card.is-open .launches-card__list .launches-item{ display:grid; }
+
+  /* Mobile-only View More button */
+  .launches-toggle-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+    padding:8px 12px;
+    font-size:13px;
+    line-height:1;
+    border-radius:7px;
+    border:1px solid var(--primary-color, #5d4037);
+    background:#fff;
+    color:var(--primary-color, #5d4037);
+  }
+  .launches-card.is-open .launches-toggle-btn{
+    background: var(--primary-color, #5d4037);
+    color:#fff;
   }
 }
+
+/* --- Desktop: restore original behavior (scrollable list, no toggle) --- */
+@media (min-width: 992px){
+  .launches-card{
+    width:277px;
+    height:473px;
+  }
+  .launches-card__list{
+    overflow-y:auto;
+    padding-right:8px;
+  }
+  .launches-toggle-btn{ display:none !important; } /* button only for mobile */
+}
+
+/* Small type polish for headings on mobile */
+@media (max-width:575.98px){
+  .rankings-title{ font-size:20px; }
+  .rankings-sub{ font-size:13px; margin-top:8px; }
+  .launches-card__header h5{ font-size:16px; }
+  .launches-name{ font-size:13.5px; }
+  .launches-meta{ font-size:12px; }
+}
+
+
+  
 /* Popular cars  */
 .view-btn {
   color: var(--primary-color);
@@ -700,6 +1143,234 @@ body {
   color: var(--neutral-light);
   transform: translateY(2px);
 }
+/* =========================================================
+   POPULAR CARS — MOBILE VIEW (≤ 998px) : 2 columns × 2 rows
+   ========================================================= */
+@media (max-width: 998px){
+  /* Heading row */
+  .popular-cars .mb-3.d-flex{
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center !important;
+  }
+  .popular-cars .rankings-title{
+    margin-bottom: 2px !important;
+    line-height: 1.2;
+  }
+  .popular-cars .rankings-sub{
+    margin-top: 0 !important;
+    color: #6b7280;
+  }
+  .popular-cars .view-btn{
+    margin-left: auto;
+    border-radius: 6px;
+  }
+
+  /* Kill slider feel on mobile; use grid */
+  .popular-cars .slider-shell{
+    background: transparent;
+    border: 0;
+    padding: 0;
+    position: relative;
+  }
+  .popular-cars .slider-btn{ display: none !important; }
+
+  /* 2×2 grid (shows 4 cards nicely) */
+  .popular-cars #popularTrack{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 12px;
+    overflow: visible !important;
+    grid-auto-flow: row;
+    scroll-snap-type: none;
+  }
+  .popular-cars #popularTrack .car-card.v2{ width: 100% !important; }
+
+  /* Card content tightening on mobile */
+  .popular-cars #popularTrack .car-card__body{ padding: 12px 12px 14px; }
+  .popular-cars #popularTrack .car-card__divider{ margin: 8px 0 10px; }
+  .popular-cars #popularTrack .btn-sm{ padding: 4px 8px; }
+}
+
+/* =========================================================
+   VERY SMALL PHONES (≤ 320px)
+   ========================================================= */
+@media (max-width: 320px){
+  .popular-cars .rankings-title{ font-size: 16px; }
+  .popular-cars .rankings-sub{ font-size: 12px; }
+  .popular-cars .view-btn{ font-size: 11px; padding: 4px 8px; }
+
+  /* 1 column if two columns are too tight */
+  .popular-cars #popularTrack{ grid-template-columns: 1fr; }
+
+  .popular-cars #popularTrack .car-card__media img{ height: 120px; object-fit: cover; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 13px; }
+  .popular-cars #popularTrack .car-card__location,
+  .popular-cars #popularTrack .car-card__row,
+  .popular-cars #popularTrack .car-card__grid{ font-size: 12px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 13.5px; }
+  .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+}
+
+/* =========================================================
+   SMALL PHONES (321–359.98px)
+   ========================================================= */
+@media (min-width:321px) and (max-width:359.98px){
+  .popular-cars .rankings-title{ font-size: 17px; }
+  .popular-cars .rankings-sub{ font-size: 12px; }
+  .popular-cars .view-btn{ font-size: 11.5px; padding: 4px 9px; }
+
+  /* still 1 column if tight; switch to 2 if your cards are narrow enough */
+  .popular-cars #popularTrack{ grid-template-columns: 1fr; }
+
+  .popular-cars #popularTrack .car-card__media img{ height: 125px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 13.5px; }
+  .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+  
+}
+
+
+/* =========================================================
+   PHONES (360–389.98px)
+   ========================================================= */
+@media (min-width:360px) and (max-width:389.98px){
+  .popular-cars .rankings-title{ font-size: 18px; }
+  .popular-cars .rankings-sub{ font-size: 12.5px; }
+  .popular-cars .view-btn{ font-size: 12px; padding: 4px 10px; }
+
+  .popular-cars #popularTrack{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .popular-cars #popularTrack .car-card__media img{ height: 130px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 14px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 14px; }
+  .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+}
+
+/* =========================================================
+   PHONES (390–429.98px)
+   ========================================================= */
+@media (min-width:390px) and (max-width:429.98px){
+  .popular-cars .rankings-title{ font-size: 18.5px; }
+  .popular-cars .rankings-sub{ font-size: 12.5px; }
+  .popular-cars .view-btn{ font-size: 12px; }
+
+  .popular-cars #popularTrack .car-card__media img{ height: 136px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 14px;}
+   .popular-cars #popularTrack .car-card__price{ font-size: 11px; }
+   .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+ 
+
+}
+/* =========================================================
+   LARGE PHONES (430–575.98px)
+   ========================================================= */
+@media (min-width:430px) and (max-width:575.98px){
+  .popular-cars .rankings-title{ font-size: 19px; }
+  .popular-cars .rankings-sub{ font-size: 13px; }
+  .popular-cars .view-btn{ font-size: 12.5px; }
+
+  .popular-cars #popularTrack .car-card__media img{ height: 140px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 14.5px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 14.5px; }
+  .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+}
+
+/* =========================================================
+   SMALL TABLETS (576–767.98px)
+   ========================================================= */
+@media (min-width:576px) and (max-width:767.98px){
+  .popular-cars .rankings-title{ font-size: 20px; }
+  .popular-cars .rankings-sub{ font-size: 13.5px; }
+  .popular-cars .view-btn{ font-size: 12.5px; padding: 5px 12px; }
+
+  .popular-cars #popularTrack{ gap: 14px; }
+  .popular-cars #popularTrack .car-card__media img{ height: 150px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 15px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 15px; }
+  .d-flex.gap-2 {
+    display: grid !important;        /* override Bootstrap flex */
+    grid-template-columns: 1fr;      /* one per row */
+    gap: 8px;                        /* keep spacing */
+    width: 100%;
+  }
+  .d-flex.gap-2 > .btn {
+    width: 100%;                     /* full width buttons */
+    justify-content: center;         /* optional: center label */
+  }
+}
+
+/* =========================================================
+   TABLETS (768–898.98px)
+   ========================================================= */
+@media (min-width:768px) and (max-width:898.98px){
+  .popular-cars .rankings-title{ font-size: 22px; }
+  .popular-cars .rankings-sub{ font-size: 14px; }
+  .popular-cars .view-btn{ font-size: 13px; padding: 6px 14px; }
+
+  .popular-cars #popularTrack{ gap: 16px; }
+  .popular-cars #popularTrack .car-card__media img{ height: 160px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 15.5px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 15.5px; }
+}
+
+/* =========================================================
+   LARGE TABLETS (899–998px)
+   ========================================================= */
+@media (min-width:899px) and (max-width:998px){
+  .popular-cars .rankings-title{ font-size: 23px; }
+  .popular-cars .rankings-sub{ font-size: 14px; }
+  .popular-cars .view-btn{ font-size: 13px; padding: 6px 16px; }
+
+  .popular-cars #popularTrack{ gap: 18px; }
+  .popular-cars #popularTrack .car-card__media img{ height: 170px; }
+  .popular-cars #popularTrack .car-card__title{ font-size: 16px; }
+  .popular-cars #popularTrack .car-card__price{ font-size: 16px; }
+}
+/* Research section */
 /* Media card with rounded corners and soft shadow */
 .research-media {
   position: relative;
@@ -766,12 +1437,76 @@ i {
   font-weight: 500;
 }
 
-/* Responsive height for image */
-@media (max-width: 991.98px) {
-  .research-media img {
-    height: 320px;
+
+/* ----- Base polish/fixes (safe) ----- */
+.research-media { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 18px 36px rgba(0,0,0,.12); }
+
+/* Scope icon color so it doesn't style every <i> on the page */
+.research-features ion-icon,
+.research-features i {
+  color: var(--primary-color);
+  width: 24px; height: 24px;
+}
+
+/* Fix selector: style text inside features */
+.research-features span {
+  color: var(--primary-dark);
+  font-weight: 400;
+}
+
+/* Heading sizing base */
+.advideo-right h2 {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.32;
+  color: #212121;
+}
+
+/* ----- MOBILE (≤575.98px) ----- */
+@media (max-width: 575.98px){
+  /* Ensure stacking order: video first, copy below */
+  .research-cta .col-lg-6:first-child { order: 1; }
+  .research-cta .col-lg-6.advideo-right { order: 2; margin-top: 10px; }
+
+  /* Make the media nicely responsive */
+  .research-media{
+    border-radius: 16px;
+    aspect-ratio: 16 / 9;         /* responsive height */
+  }
+  .research-media img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .play-btn{ width: 64px; height: 64px; } /* slightly smaller on phones */
+
+  /* Tighten right-side text for small screens */
+  .advideo-right-top{ font-size: 13px; }
+  .advideo-right h2{ font-size: 20px; line-height: 1.25; margin: 6px 0 8px; }
+  .advideo-right p{ font-size: 14px; margin-bottom: 12px; }
+
+  /* Features: force 2 columns on mobile */
+  .research-features{
+    /* override .row for phones only */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px 14px;
+    margin-top: 6px;
+  }
+  /* neutralize Bootstrap's column paddings inside our grid */
+  .research-features > [class*="col-"]{
+    padding: 0 !important;
+  }
+
+  /* Keep icon bubbles aligned/tidy */
+  .research-features .feat-icon{
+    display: inline-grid;
+    place-items: center;
+    width: 28px; height: 28px;
+    flex: 0 0 auto;
   }
 }
+
+
 /* Browse by type  */
 /* Card base (reuse hover effect from previous car cards) */
 .type-card {
@@ -855,6 +1590,81 @@ i {
   transform: translateX(6px);
   background-color: #ebebeb; /* slightly darker on hover */
 }
+
+.load-more-wrap{ display:none; }
+
+/* XS (≤360px): tighten gutters, fix right-hugging, 2 cols x 3 rows, center Load More */
+@media (max-width:360px){
+  section:has(.type-card) .row.g-4{
+    --bs-gutter-x: 10px;
+    --bs-gutter-y: 12px;
+    justify-content: center;  
+                   /* prevents cards hugging right edge */
+  }
+  section:has(.type-card) .type-card{ width:100%; margin:0; box-sizing:border-box; }
+  section:has(.type-card) .type-card img{
+    width:100% !important; margin-left:0 !important; height:120px; object-fit:cover;
+  }
+  /* show first 6 only (3 rows × 2 cols) */
+  section:has(.type-card) .row.g-4 > [class*="col-"]:nth-child(n+7){ display:none !important; }
+  section:has(.type-card) .load-more-wrap{ display:flex; justify-content:center; margin-top:8px; }
+  /* when toggled (add .show-all to the section), reveal all and hide button */
+  section:has(.type-card).show-all .row.g-4 > [class*="col-"]{ display:block !important; }
+  section:has(.type-card).show-all .load-more-wrap{ display:none !important; }
+}
+
+/* SM (361–575.98px): same idea, a bit more room */
+@media (min-width:361px) and (max-width:575.98px){
+  section:has(.type-card) .row.g-4{
+    --bs-gutter-x: 12px;
+    --bs-gutter-y: 14px;
+    justify-content: center;
+  }
+  section:has(.type-card) .type-card{ width:100%; box-sizing:border-box; }
+  section:has(.type-card) .type-card img{
+    width:100% !important; margin-left:0 !important; height:132px;
+  }
+  section:has(.type-card) .row.g-4 > [class*="col-"]:nth-child(n+7){ display:none !important; }
+  section:has(.type-card) .load-more-wrap{ display:flex; justify-content:center; margin-top:8px; }
+  section:has(.type-card).show-all .row.g-4 > [class*="col-"]{ display:block !important; }
+  section:has(.type-card).show-all .load-more-wrap{ display:none !important; }
+}
+
+/* MD (576–767.98px): 3 columns via col-md-4, show all, hide Load More */
+@media (min-width:576px) and (max-width:767.98px){
+  section:has(.type-card) .row.g-4{ --bs-gutter-x: 16px; --bs-gutter-y: 16px; }
+  section:has(.type-card) .type-card img{
+    width:100% !important; margin-left:0 !important; height:150px;
+  }
+  section:has(.type-card) .load-more-wrap{ display:none !important; }
+}
+
+/* LG- (768–991.98px) */
+@media (min-width:768px) and (max-width:991.98px){
+  section:has(.type-card) .type-card img{
+    width:100% !important; margin-left:0 !important; height:160px;
+  }
+  section:has(.type-card) .load-more-wrap{ display:none !important; }
+}
+
+/* LG+ (≥992px): 4 columns via col-lg-3, show all */
+@media (min-width:992px){
+  section:has(.type-card) .type-card img{
+    width:100% !important; margin-left:0 !important; height:170px;
+  }
+  section:has(.type-card) .load-more-wrap{ display:none !important; }
+}
+
+/* XL (≥1200px) */
+@media (min-width:1200px){
+  section:has(.type-card) .type-card img{ height:180px; }
+}
+
+/* XXL (≥1400px) */
+@media (min-width:1400px){
+  section:has(.type-card) .type-card img{ height:192px; }
+}
+
 
 /* Blog cards */
 .featured-blogs h3 {
@@ -953,17 +1763,120 @@ i {
   background-color: var(--primary-color);
   transform: translateY(2px);
 }
-/* Responsive image height */
-@media (max-width: 991.98px) {
-  .blog-media img {
-    height: 200px;
+
+
+/* Remove fixed widths so cards are fluid */
+.featured-blogs .blog-card{ width:100% !important; border-radius:14px; }
+.featured-blogs .blog-body h5,
+.featured-blogs .blog-body p{ width:auto; max-width:100%; height:auto; }
+
+/* Images scale nicely */
+.featured-blogs .blog-media img{
+  width:100% !important;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+
+/* --- XS: very small phones (≤360px) --- */
+@media (max-width:360px){
+  .featured-blogs .row.g-4{ --bs-gutter-x:10px; --bs-gutter-y:12px; }
+
+  /* Force 2 columns even though col-12 is in markup */
+  .featured-blogs .row.g-4 > .col-12{
+    flex:0 0 50%;
+    max-width:50%;
+  }
+  
+   
+  /* Show only 4 cards */
+  .featured-blogs .row.g-4 > .col-12:nth-child(n+5){ display:none !important; }
+
+  /* Header stacks; button full-width for easy tapping */
+  .featured-blogs > .d-flex.mb-3{ flex-direction:column; align-items:flex-start; }
+  .featured-blogs .view-btn{ width:100%; text-align:center; padding:10px 14px; font-size:13.5px; }
+
+  /* Type scale */
+  .featured-blogs h3{ font-size:20px; }
+  .featured-blogs .rankings-sub{ font-size:13px; }
+
+  /* Card internals */
+  .featured-blogs .blog-media img{ height:120px; }
+  .featured-blogs .blog-body{ padding:14px; }
+  .featured-blogs .badge-soft{ font-size:10px; padding:5px 8px; }
+  .featured-blogs .blog-title{ font-size:14px; line-height:1.28; margin-top:6px; }
+  .featured-blogs .blog-excerpt{ font-size:12px; margin-bottom:8px; }
+  .featured-blogs .btn.btn-outline-choco{ padding:8px 10px; font-size:12px; }
+}
+/* --- Phones (361–575.98px) — still 2×2 (4 total) --- */
+@media (min-width:361px) and (max-width:575.98px){
+  .featured-blogs .row.g-4{ --bs-gutter-x:12px; --bs-gutter-y:14px; }
+  .featured-blogs .row.g-4 > .col-12{
+    flex:0 0 50%;
+    max-width:50%;
+  }
+   
+  .featured-blogs h3{ font-size:20px; }
+  .featured-blogs p.rankings-sub{ font-size:10px; }
+
+  .featured-blogs .view-btn{
+    margin-left:auto;         /* pin to right */
+    white-space:nowrap;
+    font-size:11.5px;
+    line-height:1;
+    padding-top:10px;       /* smaller button */
+    height:32px;              /* tidy tap target */
+    border-radius:6px;
   }
 }
-@media (max-width: 575.98px) {
-  .blog-media img {
-    height: 220px;
+
+  
+
+/* --- Small tablets (576–767.98px) — Bootstrap gives 2 columns (col-md-6) --- */
+@media (min-width:576px) and (max-width:767.98px){
+    .featured-blogs .row.g-4{ --bs-gutter-x:12px; --bs-gutter-y:14px; }
+  .featured-blogs .row.g-4 > .col-12{
+    flex:0 0 50%;
+    max-width:50%;
   }
+
+  .featured-blogs h3{ font-size:22px; }
+  .featured-blogs p.rankings-sub{ font-size:13.5px; }
+
+  .featured-blogs .blog-media img{ height:135px; }
+  .featured-blogs .blog-body{ padding:16px; }
+  .featured-blogs .blog-title{ font-size:15px; line-height:1.3; }
+  .featured-blogs .blog-excerpt{ font-size:13px; }
+  .featured-blogs .btn.btn-outline-choco{ padding:9px 12px; font-size:12.5px; }
 }
+
+
+/* --- Tablets (768–991.98px) — still 2 columns --- */
+@media (min-width:768px) and (max-width:991.98px){
+  .featured-blogs .blog-media img{ height:170px; }
+  .featured-blogs .blog-title{ font-size:17px; }
+  .featured-blogs .blog-excerpt{ font-size:14px; }
+}
+
+/* --- Desktops (≥992px) — 4 columns (col-lg-3) --- */
+@media (min-width:992px){
+  .featured-blogs .blog-media img{ height:180px; }
+  .featured-blogs .blog-title{ font-size:18px; }
+  .featured-blogs .blog-excerpt{ font-size:14px; }
+}
+
+/* --- Large (≥1200px) --- */
+@media (min-width:1200px){
+  .featured-blogs .blog-media img{ height:190px; }
+  .featured-blogs .blog-title{ font-size:19px; }
+}
+
+/* --- XL (≥1400px) --- */
+@media (min-width:1400px){
+  .featured-blogs .blog-media img{ height:200px; }
+  .featured-blogs .blog-title{ font-size:20px; }
+}
+
 
 /* Review card */
 .expert-reviews h3 {
@@ -1056,17 +1969,156 @@ i {
 
 /* Reuse your outlined chocolaty button */
 
-/* Responsive image height */
-@media (max-width: 991.98px) {
-  .review-media img {
-    height: 230px;
+
+
+/* Base: remove any fixed widths so cards can scale */
+.expert-reviews .review-card{ width:100%; max-width:100%; }
+.expert-reviews .review-media img{ width:100%; height:161px; object-fit:cover; display:block; }
+
+/* Keep header (title/subtitle + button) in one row and tidy on mobile */
+@media (max-width:575.98px){
+  .expert-reviews > .d-flex.mb-3{
+    flex-wrap:nowrap !important;
+    align-items:center !important;
+  }
+  .expert-reviews .view-btn{
+    margin-left:auto;                /* pin to right */
+    white-space:nowrap;
+    font-size:11.5px;
+    line-height:1;
+    padding:6px 10px;
+    height:32px;
+    border-radius:6px;
   }
 }
-@media (max-width: 575.98px) {
-  .review-media img {
-    height: 240px;
+
+/* ====== XS phones (≤360px) ====== */
+@media (max-width:360px){
+  /* One card per row, centered */
+  .expert-reviews .row.g-4{ --bs-gutter-x:12px; --bs-gutter-y:14px; }
+  .expert-reviews .row.g-4 > .col-12{
+    display:flex; justify-content:center; align-items:stretch;
+  }
+  .expert-reviews .review-card{
+    max-width: 320px;               /* centered narrow card */
+  }
+
+  /* Typography & media */
+  .expert-reviews h3{ font-size:20px; }
+  .expert-reviews p.rankings-sub{ font-size:13px; }
+  .expert-reviews .review-media img{ height:130px; }
+  .expert-reviews .review-body{ padding:14px; }
+  .expert-reviews .review-title{ font-size:15px; }
+  .expert-reviews .review-excerpt{ font-size:12.5px; margin:8px 0 10px; }
+  .expert-reviews .rating small{ font-size:12px; }
+  .expert-reviews .chip{ font-size:8px; padding:5px 9px; }
+  
+  .expert-reviews .btn.btn-outline-choco{ padding:8px 10px; font-size:12px; }
+}
+
+/* ====== Phones (361–575.98px) ====== */
+@media (min-width:361px) and (max-width:575.98px){
+  .expert-reviews .row.g-4{ --bs-gutter-x:14px; --bs-gutter-y:16px; }
+  .expert-reviews .row.g-4 > .col-12{
+    display:flex; justify-content:center; align-items:stretch;
+  }
+  
+  .expert-reviews .view-btn{
+    margin-left:auto;         /* pin to right */
+    white-space:nowrap;
+    font-size:11.5px;
+    line-height:1;
+    padding-top:10px;       /* smaller button */
+    height:32px;              /* tidy tap target */
+    border-radius:6px;
+  }
+  .expert-reviews .review-card{ max-width: 360px; }
+
+  .expert-reviews h3{ font-size:22px; }
+  .expert-reviews p.rankings-sub{ font-size:13.5px; }
+  .expert-reviews .review-media img{ height:140px; }
+  .expert-reviews .review-body{ padding:16px; }
+  .expert-reviews .review-title{ font-size:16px; }
+  .expert-reviews .review-excerpt{ font-size:13px; }
+  .expert-reviews .btn.btn-outline-choco{ padding:9px 12px; font-size:12.5px; }
+  
+}
+
+/* ====== Small tablets (576–767.98px) ====== */
+/* Still one card per row, just a bit wider */
+@media (min-width:576px) and (max-width:767.98px){
+  .expert-reviews .row.g-4{ --bs-gutter-x:18px; --bs-gutter-y:18px; }
+  .expert-reviews .row.g-4 > .col-12{
+    display:flex; justify-content:center; align-items:stretch;
+  }
+  .expert-reviews .review-card{ max-width: 520px; }
+  .expert-reviews .review-media img{ height:160px; }
+  .expert-reviews .review-title{ font-size:17px; }
+  .expert-reviews .review-excerpt{ font-size:13.5px; }
+  
+  .expert-reviews .chip{ font-size:8px; padding:6px 10px; }
+  .expert-reviews .btn.btn-outline-choco{ padding:10px 14px
+}}
+
+/* ====== Tablets (768–991.98px) ====== */
+@media (max-width:767.98px){
+  .expert-reviews .row.g-4{ --bs-gutter-x:14px; --bs-gutter-y:16px; }
+  .expert-reviews .row.g-4 > .col-12{
+    display:flex;                /* center each card */
+    justify-content:center;
+    align-items:stretch;
+  }
+  .expert-reviews .review-card{
+    width:100%; max-width:360px; /* nice readable width */
   }
 }
+
+/* ===== Tablet (768–991.98px): 2 columns ===== */
+@media (min-width:768px) and (max-width:991.98px){
+  .expert-reviews .row.g-4{ --bs-gutter-x:20px; --bs-gutter-y:20px; }
+  /* Override col-12 to behave like col-md-6 (2-up) */
+  .expert-reviews .row.g-4 > .col-12{
+    display:block;
+    flex:0 0 50%;
+    max-width:50%;
+  }
+  .expert-reviews .review-card{ max-width:100%; }
+  .expert-reviews .review-media img{ height:180px; }
+}
+/* ====== Desktops (≥992px) ====== */
+/* Revert to your 3 columns via col-lg-4; just nice sizes */
+@media (min-width:992px){
+  .expert-reviews .review-media img{ height:190px; }
+  .expert-reviews .review-title{ font-size:18px; }
+  .expert-reviews .review-excerpt{ font-size:14px; }
+}
+
+/* ====== Large (≥1200px) / XL (≥1400px) ====== */
+@media (min-width:1200px){
+  .expert-reviews .review-media img{ height:200px; }
+  .expert-reviews .review-title{ font-size:19px; }
+}
+@media (min-width:1400px){
+  .expert-reviews .review-media img{ height:210px; }
+  .expert-reviews .review-title{ font-size:20px; }
+}
+
+
+/* Popular brands */
+/* base card already in your project; kept here for completeness */
+.card-base {
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-base:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
 
 /* Popular brands */
 /* base card already in your project; kept here for completeness */
@@ -1087,7 +2139,8 @@ i {
 /* Section Styling */
 .brands-section {
   padding: 20px;
-  margin-left: 129px;
+  margin-left: 75px;
+  margin-right: 75px ;
 }
 
 .section-title {
@@ -1111,6 +2164,7 @@ i {
 /* Brand Card */
 .brand-card {
   background: #fff;
+  max-width: 143px;
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -1169,6 +2223,9 @@ i {
   transform: translateX(6px);
   background: #e8e8e8;
 }
+
+
+
 /* Ask our Ai Expert Section */
 .ai-expert-section {
   background-color: #fefcf9;
@@ -1189,6 +2246,7 @@ i {
   color: #757575;
   font-size: 1rem;
 }
+
 
 /* Ai Expert Ask Form */
 /* wrapper width & spacing */
@@ -1291,6 +2349,98 @@ i {
   }
 }
 
+
+/* --- XS: very small phones (≤360px) --- */
+@media (max-width:360px){
+  .ai-expert-section{ padding-top:18px !important; padding-bottom:18px !important; }
+  .ai-expert-icon i{ width:48px; height:48px; font-size:32px; }
+  .ai-expert-section h5{ font-size:18px; margin-bottom:6px; }
+  .ai-expert-sub{ font-size:13px; }
+
+  .ai-mini{ max-width:100%; padding-inline:10px; }
+  .ai-mini__card{ padding:12px; border-radius:10px; }
+  .ai-mini__head{ font-size:16px; margin-bottom:6px; }
+  .ai-mini__pill{ font-size:12px; padding:7px 9px; }
+  .ai-mini__ask{ border-radius:8px; }
+  .ai-mini__input{ height:48px; font-size:15px; }
+  .ai-mini__send{ width:56px; min-width:56px; }
+  .ai-mini__note{ font-size:10px; }
+}
+
+/* --- SM: phones (361–575.98px) --- */
+@media (min-width:361px) and (max-width:575.98px){
+  .ai-expert-section{ padding-top:22px !important; padding-bottom:22px !important; }
+  .ai-expert-icon i{ width:56px; height:56px; font-size:36px; }
+  .ai-expert-section h5{ font-size:20px; margin-bottom:6px; }
+  .ai-expert-sub{ font-size:13.5px; }
+
+  .ai-mini{ max-width:100%; padding-inline:12px; }
+  .ai-mini__card{ padding:14px; }
+  .ai-mini__head{ font-size:16.5px; }
+  .ai-mini__pill{ font-size:12.5px; padding:8px 10px; }
+  .ai-mini__input{ height:50px; font-size:15px; }
+  .ai-mini__send{ width:60px; min-width:60px; }
+}
+
+/* --- MD: small tablets (576–767.98px) --- */
+@media (min-width:576px) and (max-width:767.98px){
+  .ai-expert-section{ padding-top:28px !important; padding-bottom:28px !important; }
+  .ai-expert-icon i{ width:60px; height:60px; font-size:40px; }
+  .ai-expert-section h5{ font-size:22px; }
+  .ai-expert-sub{ font-size:14px; }
+
+  .ai-mini{ max-width:640px; margin-inline:auto; }
+  .ai-mini__card{ padding:16px; }
+  .ai-mini__head{ font-size:17px; }
+  .ai-mini__pill{ font-size:13px; }
+  .ai-mini__input{ height:52px; font-size:15px; }
+  .ai-mini__send{ width:60px; min-width:60px; }
+}
+
+/* --- LG-: tablets (768–991.98px) --- */
+@media (min-width:768px) and (max-width:991.98px){
+  .ai-expert-section{ padding-top:36px !important; padding-bottom:36px !important; }
+  .ai-expert-icon i{ width:64px; height:64px; font-size:44px; }
+  .ai-expert-section h5{ font-size:24px; }
+  .ai-expert-sub{ font-size:15px; }
+
+  .ai-mini{ max-width:760px; }
+  .ai-mini__card{ padding:18px; }
+  .ai-mini__input{ height:52px; }
+}
+
+/* --- LG: desktops (992–1199.98px) --- */
+@media (min-width:992px) and (max-width:1199.98px){
+  .ai-expert-section{ padding-top:44px !important; padding-bottom:44px !important; }
+  .ai-expert-icon i{ width:70px; height:70px; font-size:50px; }
+  .ai-expert-section h5{ font-size:26px; }
+  .ai-expert-sub{ font-size:15.5px; }
+
+  .ai-mini{ max-width:872px; }
+  .ai-mini__card{ padding:20px; }
+}
+
+/* --- XL: large desktops (1200–1399.98px) --- */
+@media (min-width:1200px) and (max-width:1399.98px){
+  .ai-expert-section{ padding-top:52px !important; padding-bottom:52px !important; }
+  .ai-expert-section h5{ font-size:27px; }
+  .ai-expert-sub{ font-size:16px; }
+}
+
+/* --- XXL: ≥1400px --- */
+@media (min-width:1400px){
+  .ai-expert-section{ padding-top:60px !important; padding-bottom:60px !important; }
+  .ai-expert-section h5{ font-size:28px; }
+  .ai-expert-sub{ font-size:16px; }
+}
+
+/* --- Compatibility (if you used these older class names elsewhere) --- */
+@media (max-width:575.98px){
+  .ai-input{ font-size:16px; height:54px; }       /* alias of .ai-mini__input */
+  .ai-send-btn{ width:64px; min-width:64px; }     /* alias of .ai-mini__send */
+}
+
+
 /* FOOTER Styles */
 /* keep footer container aligned with your 1440 design width */
 .footer-container {
@@ -1370,9 +2520,60 @@ i {
   margin-right: 20px;
 }
 
-/* Responsive tweaks */
-@media (max-width: 991.98px) {
-  .footer-bottom-links .list-inline-item:not(:last-child) {
-    margin-right: 1rem;
+/* Center the container on the page (remove old left offset) */
+.footer-container{
+  max-width: 1440px;
+  margin: 0 auto !important;   /* override old margin-left:90px */
+  padding-inline: 20px;
+}
+
+/* ---------- MOBILE/TABLET: brand on top-left, 3 cols below, all left-aligned ---------- */
+@media (max-width: 991.98px){
+  /* Turn the row into a left-aligned 3-col grid */
+  .footer-row{
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)); /* 3 equal columns */
+    gap: 18px 16px;
+    justify-items: start;   /* align grid items to the left */
+    text-align: left;       /* ensure text is left aligned */
+  }
+
+  /* Brand & Contact spans the full width on the first row (top-left) */
+  .footer-row > .col-lg-5{
+    grid-column: 1 / -1;    /* occupy all 3 columns (full width) */
+  }
+
+  /* Make the 3 link sections behave as grid items, not 50% cols */
+  .footer-row > [class*="col-"]{
+    padding: 0 !important;
+    width: auto !important; /* overrides col-6 width on small screens */
+  }
+
+  /* Tighten type a bit so 3 columns fit well on phones */
+  .footer-heading{ font-size: 0.95rem; margin-bottom: .5rem; }
+  .footer-links a{ font-size: 0.92rem; }
+  .footer-logo{ max-width: 180px; }
+  .footer-contact{ font-size: 14px; line-height: 1.5; }
+}
+
+/* Optional: slightly smaller side padding on very small phones */
+@media (max-width: 575.98px){
+  .footer-container{ padding-inline: 16px; }
+}
+
+/* ---------- Bottom bar: keep your existing centered behavior on mobile, split on desktop ---------- */
+/* (Leave as-is if you already added this before) */
+.footer-motokhabar .container .d-flex.flex-column{
+  row-gap: 8px;
+  text-align: center;
+  align-items: center !important;
+  justify-content: center !important;
+}
+@media (min-width:992px){
+  .footer-motokhabar .container .d-flex.flex-column{
+    text-align: left;
+    justify-content: space-between !important;
   }
 }
+
+
