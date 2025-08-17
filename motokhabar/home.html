@@ -869,8 +869,6 @@
                 <i class="bi bi-rocket-takeoff me-2"></i>
                 <div>
                   <h5 class="m-0">New Car Launches</h5>
-                                <button type="button" class="launches-close-btn d-none" aria-label="Close list">×</button>
-
                   <small class="text-muted"
                     >Stay updated with the latest upcoming car models.</small
                   >
@@ -926,39 +924,11 @@
                   </div>
                 </a>
               </div>
-              <button type="button" class="launches-toggle-btn" aria-expanded="false">View More</button>
-
             </div>
           </aside>
         </div>
       </section>
-     <!-- JS: swap "View More" ↔ "Close" on click -->
-<script>
-document.addEventListener('click', (e) => {
-  const viewMore = e.target.closest('.launches-toggle-btn');   // "View More" button
-  const closeBtn = e.target.closest('.launches-close-btn');    // "Close ×" button
-  if (!viewMore && !closeBtn) return;
-
-  const card = (viewMore || closeBtn).closest('.launches-card');
-  if (!card) return;
-
-  const vm = card.querySelector('.launches-toggle-btn');
-  const cb = card.querySelector('.launches-close-btn');
-
-  if (viewMore) {
-    card.classList.add('is-open');
-    vm?.classList.add('d-none');        // hide "View More"
-    cb?.classList.remove('d-none');     // show "Close"
-    vm?.setAttribute('aria-expanded', 'true');
-  } else {
-    card.classList.remove('is-open');
-    vm?.classList.remove('d-none');     // show "View More"
-    cb?.classList.add('d-none');        // hide "Close"
-    vm?.setAttribute('aria-expanded', 'false');
-  }
-});
-</script>
-
+      
 
       <!-- Popular cars in 2025  -->
       <section class="container popular-cars my-5">
